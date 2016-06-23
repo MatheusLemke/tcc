@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ElmSecond</string>
+    <string name="choose_elm">Choose ELM</string>
+    <string name="cancel">Cancel</string>
+    <string name="confirm">Confirm</string>
+    <string name="choose_file">Choose File</string>
+    <string name="null_alert">This field is required</string>
+    <string name="error_on_choose_file">Error ocurred on select file</string>
+    <string name="choose_elm_alert">Select an ELM!</string>
+    <string name="emptyValueAttribute_listView"></string>
+
+
+</resources>
