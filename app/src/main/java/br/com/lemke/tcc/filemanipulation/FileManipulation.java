@@ -1,7 +1,6 @@
 package br.com.lemke.tcc.filemanipulation;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -95,7 +94,7 @@ public class FileManipulation
         String folderCanonicalPath = createElmFolder(elmName, ELMsDir);
 
         exportElmProperties(elmName, elmData, folderCanonicalPath);
-        exportElmMatrixes(elmName, elmData, folderCanonicalPath);
+        exportElmMatrixes(elmData, folderCanonicalPath);
         exportElmAttributeNames(elmName, elmData, folderCanonicalPath);
     }
 
@@ -152,7 +151,7 @@ public class FileManipulation
         }
     }
 
-    private void exportElmMatrixes(String elmName, ElmData elmData, String folderCanonicalPath)
+    private void exportElmMatrixes(ElmData elmData, String folderCanonicalPath)
     {
         exportDenseMatrix(elmData.getInputWeight(), "in", folderCanonicalPath);
         exportDenseMatrix(elmData.getBiasofHiddenNeurons(), "bias", folderCanonicalPath);
