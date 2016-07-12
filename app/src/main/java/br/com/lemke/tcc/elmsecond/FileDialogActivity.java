@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Environment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class FileDialogActivity extends AppCompatActivity
@@ -31,6 +33,7 @@ public class FileDialogActivity extends AppCompatActivity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(R.layout.activity_file_dialog);
         builder = new AlertDialog.Builder(context);
         File externalStorageDirectory = Environment.getExternalStorageDirectory();
@@ -55,8 +58,15 @@ public class FileDialogActivity extends AppCompatActivity
                 if (Current_Files.get(pos).isFile())
                 {
                     alertDialog.dismiss();
-                    setResult(Activity.RESULT_OK, new Intent().putExtra("File", Current_Files.get(pos)));
-                    Toast.makeText(context, Current_Files.get(pos).getName(), Toast.LENGTH_SHORT);
+                    try
+                    {
+                        setResult(Activity.RESULT_OK, new Intent().putExtra("FileCanonicalPath", Current_Files.get(pos).getCanonicalPath()));
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                    //Toast.makeText(context, Current_Files.get(pos).getName(), Toast.LENGTH_SHORT);
                     finish();
                 }
                 else

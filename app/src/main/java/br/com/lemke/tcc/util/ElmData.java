@@ -1,4 +1,4 @@
-package br.com.lemke.tcc.filemanipulation;
+package br.com.lemke.tcc.util;
 
 import no.uib.cipr.matrix.DenseMatrix;
 
@@ -15,14 +15,18 @@ public class ElmData
     private DenseMatrix BiasofHiddenNeurons;
     private DenseMatrix OutputWeight;
     private String func;
-    private String[] AttributeNames;
+    private int elm_Type;
+    private String[] AttributesNames;
+    private String[] ClassesNames;
+    private int n_Attributes;
 
     public ElmData()
     {
     }
 
-    public ElmData(String elmName, int numberofInputNeurons, int numberofHiddenNeurons, int numberofOutputNeurons, DenseMatrix InputWeight, DenseMatrix BiasofHiddenNeurons, DenseMatrix OutputWeight, String func, String[] AttributeNames)
+    public ElmData(String elmName, int numberofInputNeurons, int numberofHiddenNeurons, int numberofOutputNeurons, DenseMatrix InputWeight, DenseMatrix BiasofHiddenNeurons, DenseMatrix OutputWeight, String func, int elm_Type, String[] AttributesNames, String[] ClassesNames, int n_Attributes)
     {
+        this.elmName = elmName;
         this.numberofInputNeurons = numberofInputNeurons;
         this.numberofHiddenNeurons = numberofHiddenNeurons;
         this.numberofOutputNeurons = numberofOutputNeurons;
@@ -30,8 +34,10 @@ public class ElmData
         this.BiasofHiddenNeurons = BiasofHiddenNeurons;
         this.OutputWeight = OutputWeight;
         this.func = func;
-        this.AttributeNames = AttributeNames;
-        this.elmName = elmName;
+        this.elm_Type = elm_Type;
+        this.AttributesNames = AttributesNames;
+        this.ClassesNames = ClassesNames;
+        this.n_Attributes = n_Attributes;
     }
 
     public int getNumberofInputNeurons()
@@ -104,14 +110,14 @@ public class ElmData
         OutputWeight = outputWeight;
     }
 
-    public String[] getAttributeNames()
+    public String[] getAttributesNames()
     {
-        return AttributeNames;
+        return AttributesNames;
     }
 
-    public void setAttributeNames(String[] attributeNames)
+    public void setAttributesNames(String[] attributesNames)
     {
-        AttributeNames = attributeNames;
+        AttributesNames = attributesNames;
     }
 
     public String getElmName()
@@ -122,5 +128,35 @@ public class ElmData
     public void setElmName(String elmName)
     {
         this.elmName = elmName;
+    }
+
+    public int getElm_Type()
+    {
+        return elm_Type;
+    }
+
+    public void setElm_Type(int elm_Type)
+    {
+        this.elm_Type = elm_Type;
+    }
+
+    public String[] getClassesNames()
+    {
+        return ClassesNames;
+    }
+
+    public void setClassesNames(String[] classesNames)
+    {
+        ClassesNames = classesNames;
+    }
+
+    public int getN_Attributes()
+    {
+        return n_Attributes;
+    }
+
+    public void setN_Attributes(int n_Attributes)
+    {
+        this.n_Attributes = n_Attributes;
     }
 }

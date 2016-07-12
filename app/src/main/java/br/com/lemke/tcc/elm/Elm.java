@@ -11,32 +11,18 @@ package br.com.lemke.tcc.elm;
  * */
 
 import android.content.Context;
-import android.util.Log;
-import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
-import br.com.lemke.tcc.elmsecond.R;
-import br.com.lemke.tcc.filemanipulation.FileManipulation;
+import br.com.lemke.tcc.util.FileManipulation;
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.DenseVector;
-import no.uib.cipr.matrix.Matrices;
 import no.uib.cipr.matrix.NotConvergedException;
-import no.uib.cipr.matrix.io.MatrixInfo;
-import no.uib.cipr.matrix.io.MatrixVectorReader;
 import no.uib.cipr.matrix.io.MatrixVectorWriter;
-import no.uib.cipr.matrix.io.MatrixInfo.MatrixField;
-import no.uib.cipr.matrix.io.MatrixInfo.MatrixSymmetry;
 
 public class Elm
 {

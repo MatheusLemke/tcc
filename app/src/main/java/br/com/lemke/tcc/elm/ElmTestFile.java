@@ -1,19 +1,21 @@
 package br.com.lemke.tcc.elm;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import java.io.File;
 import java.io.IOException;
 
-import br.com.lemke.tcc.filemanipulation.ElmData;
-import br.com.lemke.tcc.filemanipulation.FileManipulation;
+import br.com.lemke.tcc.util.Constants;
+import br.com.lemke.tcc.util.ElmData;
+import br.com.lemke.tcc.util.FileManipulation;
 import no.uib.cipr.matrix.DenseMatrix;
 
 /**
  * Created by lemke on 22/05/16.
  */
-public class ElmTest
+public class ElmTestFile
 {
     private DenseMatrix Test_set;
     private int numTestData;
@@ -24,6 +26,7 @@ public class ElmTest
     private String func;
     private int[] label;
     private int elm_Type;
+    private int n_Attributes;
 
     private DenseMatrix BiasofHiddenNeurons;
     private DenseMatrix TestP;
@@ -32,15 +35,15 @@ public class ElmTest
     private float TestingTime;
     private double TestingAccuracy;
 
-    public ElmTest()
+    public ElmTestFile()
     {
         TestingTime = 0;
         TestingAccuracy = 0;
     }
 
-    private void importElm(FileManipulation fm, String elmName, File filesDir)
+    private void importElmToTest(FileManipulation fm, String elmName, File filesDir)
     {
-        ElmData elmData = fm.importElm(elmName, filesDir);
+        ElmData elmData = fm.importToTest(elmName, filesDir);
 
         numberofOutputNeurons = elmData.getNumberofOutputNeurons();
         BiasofHiddenNeurons = elmData.getBiasofHiddenNeurons();
@@ -49,6 +52,8 @@ public class ElmTest
         numberofHiddenNeurons = elmData.getNumberofHiddenNeurons();
         OutputWeight = elmData.getOutputWeight();
         label = initializeLabel();
+        elm_Type = elmData.getElm_Type();
+        n_Attributes = elmData.getN_Attributes();
     }
 
     private int[] initializeLabel()
@@ -59,36 +64,29 @@ public class ElmTest
         return label;
     }
 
-    public void test(String elmName, double[][] data, Context context)
-    {
-        FileManipulation fileManipulation = new FileManipulation();
-        importElm(fileManipulation, elmName, context.getFilesDir());
-        Log.d("test", "Importou " + elmName);
-
-        Test_set = new DenseMatrix(data);
-        test();
-    }
-
     public void test(String elmName, String testFilePath, Context context)
     {
         FileManipulation fileManipulation = new FileManipulation();
-        importElm(fileManipulation, elmName, context.getFilesDir());
-        Log.d("test", "Importou " + elmName);
+        importElmToTest(fileManipulation, elmName, context.getFilesDir());
+        //       Log.d("TestFile", "Importou ELM");
+
+        //      Log.d("TestFile", "ELMNAME = " + elmName);
+        //      Log.d("TestFile", "TESTFILEPATH = " + testFilePath);
 
         try
         {
-            if (elmName.equals("diabetes") && testFilePath == null)
-                Test_set = fileManipulation.importMatrixFromFile(context);
+            if (elmName.equals(Constants.ELM_NAME) && testFilePath == null)
+                Test_set = fileManipulation.importMatrixToTest(context, elm_Type);
             else
-                Test_set = fileManipulation.importMatrixFromFile(testFilePath);
-            Log.d("test", "Importou matriz de teste");
+                Test_set = fileManipulation.importMatrixFromFile(testFilePath, elm_Type);
+            //Log.d("test", "Importou matriz de teste");
             test();
+            //Log.d("test", "Testou");
         }
         catch (IOException e)
         {
             e.printStackTrace();
         }
-
     }
 
     private void test()
@@ -233,7 +231,6 @@ public class ElmTest
             TestingAccuracy = 1 - MissClassificationRate_Testing * 1.0f / numTestData;
 
         }
-        Log.d("test", "testou");
     }
 
     public float getTestingTime()

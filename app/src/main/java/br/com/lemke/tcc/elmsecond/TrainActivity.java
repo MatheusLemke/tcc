@@ -3,24 +3,18 @@ package br.com.lemke.tcc.elmsecond;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.Toast;
 
-import java.io.File;
-import java.io.IOException;
-
-import br.com.lemke.tcc.constants.Constants;
+import br.com.lemke.tcc.util.Constants;
 import br.com.lemke.tcc.elm.ElmTrain;
 import no.uib.cipr.matrix.NotConvergedException;
 
 public class TrainActivity extends AppCompatActivity
 {
-    private String attributeNamesFilePath;
+    private String attributesClassesNamesFilePath;
     private String trainFilePath;
 
     @Override
@@ -46,15 +40,18 @@ public class TrainActivity extends AppCompatActivity
     {
         // Gerar uma barra de carregamento
         EditText editTextElmName = (EditText) findViewById(R.id.editText_Train_ELMName);
+        RadioGroup radioGroupType = (RadioGroup) findViewById(R.id.radioGroup_Train_Type);
+        RadioGroup radioGroupFunction = (RadioGroup) findViewById(R.id.radioGroup_Train_ActivationFunction);
         EditText editTextNumberOfHiddenNeurons = (EditText) findViewById(R.id.editText_Train_NumberOfHiddenNeurons);
-        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup_Train_ActivationFunction);
         EditText editTextTrainFilePath = (EditText) findViewById(R.id.editText_Train_TrainFilePath);
-        EditText editTextAttributeNamesFilePath = (EditText) findViewById(R.id.editText_Train_AttributeNamesFilePath);
+        EditText editTextAttributesClassesNamesFilePath = (EditText) findViewById(R.id.editText_Train_AttributesClassesNamesFilePath);
 
+        assert editTextElmName != null;
         String elmName = editTextElmName.getText().toString();
         if (elmName.matches(""))
             elmName = null;
 
+        assert editTextNumberOfHiddenNeurons != null;
         String numberOfHiddenNeuronsText = editTextNumberOfHiddenNeurons.getText().toString();
         int numberOfHiddenNeurons;
         if (numberOfHiddenNeuronsText.matches(""))
@@ -62,47 +59,62 @@ public class TrainActivity extends AppCompatActivity
         else
             numberOfHiddenNeurons = Integer.parseInt(numberOfHiddenNeuronsText);
 
+        assert editTextTrainFilePath != null;
         trainFilePath = editTextTrainFilePath.getText().toString();
         if (trainFilePath.matches(""))
             trainFilePath = null;
 
-        attributeNamesFilePath = editTextAttributeNamesFilePath.getText().toString();
-        if (attributeNamesFilePath.matches(""))
-            attributeNamesFilePath = null;
+        assert editTextAttributesClassesNamesFilePath != null;
+        attributesClassesNamesFilePath = editTextAttributesClassesNamesFilePath.getText().toString();
+        if (attributesClassesNamesFilePath.matches(""))
+            attributesClassesNamesFilePath = null;
 
-        if (trainFilePath == null && attributeNamesFilePath != null)
+        if (trainFilePath == null && attributesClassesNamesFilePath != null)
         {
             editTextTrainFilePath.setError(getString(R.string.null_alert));
             editTextTrainFilePath.requestFocus();
         }
-        else if (trainFilePath != null && attributeNamesFilePath == null)
+        else if (trainFilePath != null && attributesClassesNamesFilePath == null)
         {
-            editTextAttributeNamesFilePath.setError(getString(R.string.null_alert));
-            editTextAttributeNamesFilePath.requestFocus();
+            editTextAttributesClassesNamesFilePath.setError(getString(R.string.null_alert));
+            editTextAttributesClassesNamesFilePath.requestFocus();
         }
         else
         {
             editTextTrainFilePath.setError(null);
-            editTextAttributeNamesFilePath.setError(null);
+            editTextAttributesClassesNamesFilePath.setError(null);
 
             if (trainFilePath == null)
-                elmName = "diabetes";
+                elmName = Constants.ELM_NAME;
 
             String func;
-            int radioButtonID = radioGroup.getCheckedRadioButtonId();
-            View radioButton = radioGroup.findViewById(radioButtonID);
-            int index = radioGroup.indexOfChild(radioButton);
-            RadioButton r = (RadioButton) radioGroup.getChildAt(index);
-            String selectedText = r.getText().toString();
-            if (selectedText.equals("Sigmoid"))
+            assert radioGroupFunction != null;
+            int radioButtonFunctionID = radioGroupFunction.getCheckedRadioButtonId();
+            View radioButtonFunction = radioGroupFunction.findViewById(radioButtonFunctionID);
+            int indexFunction = radioGroupFunction.indexOfChild(radioButtonFunction);
+            RadioButton rFunction = (RadioButton) radioGroupFunction.getChildAt(indexFunction);
+            String functionName = rFunction.getText().toString();
+            if (functionName.equals("Sigmoid"))
                 func = "sig";
             else
                 func = "sin";
 
-            ElmTrain elmTrain = new ElmTrain(1, numberOfHiddenNeurons, func);
+            int elm_Type;
+            assert radioGroupType != null;
+            int radioButtonTypeID = radioGroupType.getCheckedRadioButtonId();
+            View radioButtonType = radioGroupType.findViewById(radioButtonTypeID);
+            int indexType = radioGroupType.indexOfChild(radioButtonType);
+            RadioButton rType = (RadioButton) radioGroupType.getChildAt(indexType);
+            String type = rType.getText().toString();
+
+            if (type.equals("Multiclassification"))
+                elm_Type = 1;
+            else elm_Type = 0;
+
+            ElmTrain elmTrain = new ElmTrain(elm_Type, numberOfHiddenNeurons, func);
             try
             {
-                elmTrain.train(elmName, trainFilePath, attributeNamesFilePath, this);
+                elmTrain.train(elmName, trainFilePath, attributesClassesNamesFilePath, elm_Type, this);
             }
             catch (NotConvergedException e)
             {
@@ -129,31 +141,17 @@ public class TrainActivity extends AppCompatActivity
         {
             if (requestCode == Constants.REQUEST_CHOOSE_TRAIN_FILE)
             {
-                File trainFile = (File) data.getSerializableExtra("File");
-                try
-                {
-                    trainFilePath = trainFile.getCanonicalPath();
-                    EditText editTextTrainFilePath = (EditText) findViewById(R.id.editText_Train_TrainFilePath);
-                    editTextTrainFilePath.setText(trainFilePath);
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
+                trainFilePath = (String) data.getSerializableExtra("FileCanonicalPath");
+                EditText editTextTrainFilePath = (EditText) findViewById(R.id.editText_Train_TrainFilePath);
+                assert editTextTrainFilePath != null;
+                editTextTrainFilePath.setText(trainFilePath);
             }
             else if (requestCode == Constants.REQUEST_CHOOSE_ATTRIBUTES_FILE)
             {
-                File attFile = (File) data.getSerializableExtra("File");
-                try
-                {
-                    attributeNamesFilePath = attFile.getCanonicalPath();
-                    EditText editTextAttributeNamesFilePath = (EditText) findViewById(R.id.editText_Train_AttributeNamesFilePath);
-                    editTextAttributeNamesFilePath.setText(attributeNamesFilePath);
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
+                attributesClassesNamesFilePath = (String) data.getSerializableExtra("FileCanonicalPath");
+                EditText editTextAttributeNamesFilePath = (EditText) findViewById(R.id.editText_Train_AttributesClassesNamesFilePath);
+                assert editTextAttributeNamesFilePath != null;
+                editTextAttributeNamesFilePath.setText(attributesClassesNamesFilePath);
             }
         }
     }

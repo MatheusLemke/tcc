@@ -6,8 +6,8 @@ import android.util.Log;
 import java.io.File;
 import java.io.IOException;
 
-import br.com.lemke.tcc.filemanipulation.FileManipulation;
-import br.com.lemke.tcc.filemanipulation.ElmData;
+import br.com.lemke.tcc.util.FileManipulation;
+import br.com.lemke.tcc.util.ElmData;
 import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.Matrices;
 import no.uib.cipr.matrix.NotConvergedException;
@@ -45,30 +45,37 @@ public class ElmTrain
         TrainingAccuracy = 0;
     }
 
-    public void train(String elmName, String trainFilePath, String attributeNamesFilePath, Context context) throws NotConvergedException
+    public void train(String elmName, String trainFilePath, String attributesClassesNamesFilePath, int elm_Type, Context context) throws NotConvergedException
     {
         FileManipulation fm = new FileManipulation();
-        String[] attributeNames;
+        String[] attributesNames;
+        String[] classesNames = null;
+        String[][] attributesClassesNames;
+        this.elm_Type = elm_Type;
         try
         {
             if (trainFilePath == null)
             {
-                this.train_set = fm.importMatrixFromFile(context);
-                attributeNames = fm.importAttributeNamesFromFile(context);
+                this.train_set = fm.importMatrixFromFile(context, elm_Type);
+                attributesClassesNames = fm.importAttributesClassesNamesToTrain(context, train_set.numColumns() - 1, elm_Type,fm.getNumberofOutputNeurons());
             }
             else
             {
-                this.train_set = fm.importMatrixFromFile(trainFilePath);
-                attributeNames = fm.importAttributeNamesFromFile(attributeNamesFilePath);
+                this.train_set = fm.importMatrixFromFile(trainFilePath, elm_Type);
+                attributesClassesNames = fm.importAttributesClassesNamesToTrain(attributesClassesNamesFilePath, train_set.numColumns() - 1, elm_Type, fm.getNumberofOutputNeurons());
             }
+
+            attributesNames = attributesClassesNames[0];
+            if (elm_Type == 1)
+                classesNames = attributesClassesNames[1];
 
             // NÃO ESQUECER DE FAZER ISSO AQUI
             this.numberofOutputNeurons = fm.getNumberofOutputNeurons();
 
-            Log.d("load", "Carregou");
+            //Log.d("train", "Carregou");
             train();
-            exportElm(elmName, attributeNames, context.getFilesDir());
-            Log.d("train", "Exportou");
+            exportElm(elmName, attributesNames, classesNames, elm_Type, context.getFilesDir());
+            //Log.d("train", "Exportou");
         }
         catch (IOException e)
         {
@@ -76,12 +83,12 @@ public class ElmTrain
         }
     }
 
-    private void exportElm(String elmName, String[] attributeNames, File filesDir)
+    private void exportElm(String elmName, String[] attributeNames, String[] classesNames, int elm_Type, File filesDir)
     {
         FileManipulation fileManipulation = new FileManipulation();
         ElmData elmData = new ElmData(elmName, numberofInputNeurons, numberofHiddenNeurons, numberofOutputNeurons,
-                InputWeight, BiasofHiddenNeurons, OutputWeight, func, attributeNames);
-        fileManipulation.exportElm(elmName, elmData, filesDir);
+                InputWeight, BiasofHiddenNeurons, OutputWeight, func, elm_Type, classesNames, attributeNames, attributeNames.length);
+        fileManipulation.export(elmName, elmData, filesDir);
     }
 
     private void train() throws NotConvergedException
@@ -104,7 +111,7 @@ public class ElmTrain
         transT.transpose(T);
         transP.transpose(P);
 
-        if (elm_Type != 0)    //CLASSIFIER
+        if (elm_Type != 0) //CLASSIFIER
         {
             // LABEL SEMPRE É O MESMO. ENTÃO PODE SER GERADO NO TESTE
             label = new int[numberofOutputNeurons];

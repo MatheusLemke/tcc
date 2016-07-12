@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@color/background"
     tools:context="br.com.lemke.tcc.elmsecond.TrainActivity">
 
 
@@ -33,18 +33,17 @@
         android:id="@+id/editText_Train_ELMName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:layout_below="@+id/textView_Train_ELMName"
+        android:layout_toStartOf="@+id/textView_Train_NumberOfHiddenNeurons"
         android:inputType="text"
-        android:maxLines="1"
-        />
+        android:maxLines="1"/>
 
     <TextView
         android:id="@+id/textView_Train_NumberOfHiddenNeurons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/editText_Train_ELMName"
+        android:layout_alignBottom="@+id/textView_Train_ELMName"
+        android:layout_alignParentEnd="true"
         android:paddingTop="5dp"
         android:text="Hidden Neurons"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
@@ -53,8 +52,8 @@
         android:id="@+id/editText_Train_NumberOfHiddenNeurons"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/textView_Train_ELMName"
-        android:layout_alignParentStart="true"
+        android:layout_alignEnd="@+id/textView_Train_NumberOfHiddenNeurons"
+        android:layout_alignStart="@+id/textView_Train_NumberOfHiddenNeurons"
         android:layout_below="@+id/textView_Train_NumberOfHiddenNeurons"
         android:ems="10"
         android:inputType="number"
@@ -62,23 +61,54 @@
         android:text="20"/>
 
     <TextView
+        android:id="@+id/textView_Train_Type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@+id/textView_Train_Files"
+        android:layout_below="@+id/editText_Train_ELMName"
+        android:paddingTop="5dp"
+        android:text="Type"
+        android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroup_Train_Type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView_Train_Type">
+
+        <RadioButton
+            android:id="@+id/radioButton_Train_Multiclassification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Multiclassification"/>
+
+        <RadioButton
+            android:id="@+id/radioButton_Train_Regression"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Regression"/>
+
+
+    </RadioGroup>
+
+
+    <TextView
         android:id="@+id/textView_Train_ActivationFunction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView_Train_NumberOfHiddenNeurons"
-        android:layout_alignEnd="@+id/button_Train_ChooseTrainFile"
-        android:layout_toEndOf="@+id/imageButton_Train_Run"
+        android:layout_alignStart="@+id/button_Train_ChooseTrainFile"
+        android:layout_below="@+id/editText_Train_ELMName"
         android:paddingTop="5dp"
-        android:text="Activation Function"
+        android:text="Function"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     <RadioGroup
         android:id="@+id/radioGroup_Train_ActivationFunction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView_Train_ActivationFunction"
-        android:layout_alignParentEnd="true"
-        android:layout_alignRight="@+id/textView_Train_ActivationFunction"
+        android:layout_alignStart="@+id/textView_Train_ActivationFunction"
         android:layout_below="@+id/textView_Train_ActivationFunction">
 
         <RadioButton
@@ -139,21 +169,21 @@
         android:text="Choose File"/>
 
     <TextView
-        android:id="@+id/textView_Train_AttributeNames"
+        android:id="@+id/textView_Train_AttributesClassesNames"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/editText_Train_TrainFilePath"
         android:paddingTop="5dp"
-        android:text="Attribute Names"
+        android:text="Attributes and Classes"
         android:textAppearance="?android:attr/textAppearanceSmall"/>
 
     <EditText
-        android:id="@+id/editText_Train_AttributeNamesFilePath"
+        android:id="@+id/editText_Train_AttributesClassesNamesFilePath"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/textView_Train_AttributeNames"
+        android:layout_below="@+id/textView_Train_AttributesClassesNames"
         android:layout_toStartOf="@+id/button_Train_ChooseTrainFile"
         android:clickable="false"
         android:cursorVisible="false"
@@ -166,7 +196,7 @@
         android:id="@+id/button_Train_ChooseAttributeNamesFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/editText_Train_AttributeNamesFilePath"
+        android:layout_alignBottom="@+id/editText_Train_AttributesClassesNamesFilePath"
         android:layout_alignParentEnd="true"
         android:onClick="buttonChooseAttributeNamesFileClick"
         android:text="Choose File"/>
@@ -180,5 +210,6 @@
         android:background="@drawable/ic_play_circle_filled_black_24dp"
         android:onClick="imageButtonRunClick"
         />
+
 
 </RelativeLayout>

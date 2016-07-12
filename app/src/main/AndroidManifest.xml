@@ -31,6 +31,8 @@
         </activity>
         <activity android:name=".ListElmsActivity">
         </activity>
+        <activity android:name=".TestDebugActivity">
+        </activity>
     </application>
 
 </manifest>
