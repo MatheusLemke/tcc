@@ -19,13 +19,13 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".TrainActivity">
+        <activity android:name=".TrainActivity" android:label="Train">
         </activity>
-        <activity android:name=".ResultsActivity">
+        <activity android:name=".ResultsActivity" android:label="Results">
         </activity>
-        <activity android:name=".TestFileActivity">
+        <activity android:name=".TestFileActivity" android:label="Test File">
         </activity>
-        <activity android:name=".TestUniqueActivity">
+        <activity android:name=".TestUniqueActivity" android:label="Test Input">
         </activity>
         <activity android:name=".FileDialogActivity">
         </activity>

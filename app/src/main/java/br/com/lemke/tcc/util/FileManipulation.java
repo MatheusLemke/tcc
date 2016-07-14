@@ -34,7 +34,7 @@ public class FileManipulation
 
     public DenseMatrix importMatrixFromFile(Context context, int elm_Type) throws IOException
     {
-        InputStream inputStream = context.getResources().openRawResource(R.raw.liver_train);
+        InputStream inputStream = context.getResources().openRawResource(R.raw.space_ga_train);
         reader = new BufferedReader(new InputStreamReader(inputStream));
         return readMatrix(elm_Type);
     }
@@ -42,8 +42,8 @@ public class FileManipulation
     public DenseMatrix importMatrixToTest(Context context, int elm_Type) throws IOException
     {
         // TODO: arquivo de teste por padrão
-        //InputStream inputStream = context.getResources().openRawResource(R.raw.diabetes_test);
-        InputStream inputStream = context.getResources().openRawResource(R.raw.liver_test);
+        //InputStream inputStream = context.getResources().openRawResource(R.raw.space_ga_test);
+        InputStream inputStream = context.getResources().openRawResource(R.raw.space_ga_test);
         reader = new BufferedReader(new InputStreamReader(inputStream));
         return readMatrix(elm_Type);
     }
@@ -132,8 +132,7 @@ public class FileManipulation
             try
             {
                 return folder.getCanonicalPath();
-            }
-            catch (IOException e)
+            } catch (IOException e)
             {
                 e.printStackTrace();
             }
@@ -158,8 +157,7 @@ public class FileManipulation
 
             properties.store(bufferedWriter, "Elm properties");
             bufferedWriter.close();
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -194,8 +192,7 @@ public class FileManipulation
             }
 
             bufferedWriter.close();
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -209,15 +206,6 @@ public class FileManipulation
             File fileAndPath = new File(folderCanonicalPath, elmName + ".ac");
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileAndPath));
 
-            String[] classesNames = elmData.getClassesNames();
-            for (int i = 0; i < classesNames.length; i++)
-            {
-                bufferedWriter.append(classesNames[i]);
-                bufferedWriter.newLine();
-            }
-
-            bufferedWriter.newLine();
-
             String[] attributeNames = elmData.getAttributesNames();
             for (int i = 0; i < attributeNames.length; i++)
             {
@@ -225,9 +213,19 @@ public class FileManipulation
                 bufferedWriter.newLine();
             }
 
+            if (elmData.getElm_Type() == 1)
+            {
+                bufferedWriter.newLine();
+                String[] classesNames = elmData.getClassesNames();
+                for (int i = 0; i < classesNames.length; i++)
+                {
+                    bufferedWriter.append(classesNames[i]);
+                    bufferedWriter.newLine();
+                }
+            }
+
             bufferedWriter.close();
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -260,8 +258,7 @@ public class FileManipulation
             try
             {
                 return folder.getCanonicalPath();
-            }
-            catch (IOException e)
+            } catch (IOException e)
             {
                 e.printStackTrace();
             }
@@ -290,8 +287,7 @@ public class FileManipulation
             }
             bufferedReader.close();
             return properties;
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -329,8 +325,7 @@ public class FileManipulation
             denseMatrix = new DenseMatrix(data);
 
             bufferedReader.close();
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -367,8 +362,7 @@ public class FileManipulation
             bufferedReader.close();
 
             return new String[][]{attributesNames, classesNames};
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
@@ -387,7 +381,7 @@ public class FileManipulation
 
     public String[][] importAttributesClassesNamesToTrain(Context context, int n_Attributes, int elm_Type, int n_Classes) throws IOException
     {
-        InputStream inputStream = context.getResources().openRawResource(R.raw.liver_attributes_classes_names);
+        InputStream inputStream = context.getResources().openRawResource(R.raw.space_ga_attributes_classes_names);
         reader = new BufferedReader(new InputStreamReader(inputStream));
 
         return importAttributesClassesNamesToTrain(n_Attributes, elm_Type, n_Classes);
@@ -396,7 +390,7 @@ public class FileManipulation
     private String[][] importAttributesClassesNamesToTrain(int n_Attributes, int elm_Type, int n_Classes) throws IOException
     {
         String[] attributes = new String[n_Attributes];
-        String[] classes = new String[n_Classes];
+        String[] classes = null;
 
         for (int i = 0; i < n_Attributes; i++)
         {
@@ -404,6 +398,7 @@ public class FileManipulation
             if (((i + 1) == n_Attributes) && (elm_Type == 1))
             {
                 reader.readLine();
+                classes = new String[n_Classes];
                 for (int j = 0; j < n_Classes; j++)
                     classes[j] = reader.readLine();
             }
@@ -442,8 +437,7 @@ public class FileManipulation
             try
             {
                 elmFolderCanonicalPath = elmTestFolder.getCanonicalPath();
-            }
-            catch (IOException e)
+            } catch (IOException e)
             {
                 e.printStackTrace();
             }
@@ -452,8 +446,7 @@ public class FileManipulation
                 try
                 {
                     return folderFunction.getCanonicalPath();
-                }
-                catch (IOException e)
+                } catch (IOException e)
                 {
                     e.printStackTrace();
                 }
@@ -470,8 +463,7 @@ public class FileManipulation
             try
             {
                 elmFolderCanonicalPath = elmTestFolder.getCanonicalPath();
-            }
-            catch (IOException e)
+            } catch (IOException e)
             {
                 e.printStackTrace();
             }
@@ -482,8 +474,7 @@ public class FileManipulation
                 try
                 {
                     folderFunctionCanonicalPath = folderFunction.getCanonicalPath();
-                }
-                catch (IOException e)
+                } catch (IOException e)
                 {
                     e.printStackTrace();
                 }
@@ -492,8 +483,7 @@ public class FileManipulation
                     try
                     {
                         return folderNeurons.getCanonicalPath();
-                    }
-                    catch (IOException e)
+                    } catch (IOException e)
                     {
                         e.printStackTrace();
                     }

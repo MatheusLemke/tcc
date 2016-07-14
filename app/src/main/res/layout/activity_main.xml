@@ -22,14 +22,13 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="buttonTrainClick"
-            android:paddingRight="50dp">
+            android:onClick="buttonTrainClick">
 
             <ImageView
                 android:id="@+id/imageView_Main_Train"
-                android:layout_width="@dimen/main_image_size"
-                android:layout_height="@dimen/main_image_size"
-                android:src="@drawable/train"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/treadmill"/>
 
             <TextView
                 android:id="@+id/textView_Main_Train"
@@ -44,32 +43,6 @@
                 android:textStyle="bold"/>
 
         </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:onClick="buttonTestClick">
-
-            <ImageView
-                android:id="@+id/imageView_Main_TestFile"
-                android:layout_width="@dimen/main_image_size"
-                android:layout_height="@dimen/main_image_size"
-                android:src="@drawable/test_file"/>
-
-            <TextView
-                android:id="@+id/textView_Main_TestFile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/imageView_Main_TestFile"
-                android:layout_alignStart="@id/imageView_Main_TestFile"
-                android:layout_below="@id/imageView_Main_TestFile"
-                android:text="Test File"
-                android:textAlignment="center"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold"/>
-        </RelativeLayout>
-
     </LinearLayout>
 
     <LinearLayout
@@ -82,15 +55,16 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:onClick="buttonTestInputClick">
+            android:onClick="buttonTestInputClick"
+            android:paddingRight="50dp">
 
             <ImageView
                 android:id="@+id/imageView_Main_TestInput"
-                android:layout_width="@dimen/main_image_size"
-                android:layout_height="@dimen/main_image_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:src="@drawable/test_input"/>
+                android:src="@drawable/athlete_running"/>
 
             <TextView
                 android:id="@+id/textView_Main_TestInput"
@@ -100,6 +74,31 @@
                 android:layout_alignStart="@id/imageView_Main_TestInput"
                 android:layout_below="@id/imageView_Main_TestInput"
                 android:text="Test Input"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold"/>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:onClick="buttonTestClick">
+
+            <ImageView
+                android:id="@+id/imageView_Main_TestFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/men_running"/>
+
+            <TextView
+                android:id="@+id/textView_Main_TestFile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@id/imageView_Main_TestFile"
+                android:layout_alignStart="@id/imageView_Main_TestFile"
+                android:layout_below="@id/imageView_Main_TestFile"
+                android:text="Test File"
                 android:textAlignment="center"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold"/>

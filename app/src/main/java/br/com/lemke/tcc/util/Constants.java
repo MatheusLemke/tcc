@@ -22,7 +22,7 @@ public class Constants
     public static final int N_EXECUTIONS = 30;
 
 
-    public static final int MIN_NUMBER_OF_HIDDEN_NEURONS = 40;
+    public static final int MIN_NUMBER_OF_HIDDEN_NEURONS = 10;
     public static final int MAX_NUMBER_OF_HIDDEN_NEURONS = 50;
     public static String[] FUNCTIONS = {"sig", "sin"};
 
@@ -31,8 +31,8 @@ public class Constants
     public DenseMatrix importMatrixToTest(Context context, int elm_Type) throws IOException
     public String[][] importAttributesClassesNamesToTrain(Context context, int n_Attributes, int elm_Type, int n_Classes) throws IOException
      */
-    public static final int ELM_TYPE = 1;
-    public static final String ELM_NAME = "Liver";
+    public static final int ELM_TYPE = 0;
+    public static final String ELM_NAME = "Space_GA";
 
 
 }

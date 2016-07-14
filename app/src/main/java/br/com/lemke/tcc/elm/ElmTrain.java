@@ -57,9 +57,8 @@ public class ElmTrain
             if (trainFilePath == null)
             {
                 this.train_set = fm.importMatrixFromFile(context, elm_Type);
-                attributesClassesNames = fm.importAttributesClassesNamesToTrain(context, train_set.numColumns() - 1, elm_Type,fm.getNumberofOutputNeurons());
-            }
-            else
+                attributesClassesNames = fm.importAttributesClassesNamesToTrain(context, train_set.numColumns() - 1, elm_Type, fm.getNumberofOutputNeurons());
+            } else
             {
                 this.train_set = fm.importMatrixFromFile(trainFilePath, elm_Type);
                 attributesClassesNames = fm.importAttributesClassesNamesToTrain(attributesClassesNamesFilePath, train_set.numColumns() - 1, elm_Type, fm.getNumberofOutputNeurons());
@@ -76,18 +75,20 @@ public class ElmTrain
             train();
             exportElm(elmName, attributesNames, classesNames, elm_Type, context.getFilesDir());
             //Log.d("train", "Exportou");
-        }
-        catch (IOException e)
+        } catch (IOException e)
         {
             e.printStackTrace();
         }
     }
 
-    private void exportElm(String elmName, String[] attributeNames, String[] classesNames, int elm_Type, File filesDir)
+    private void exportElm(String elmName, String[] attributesNames, String[] classesNames, int elm_Type, File filesDir)
     {
         FileManipulation fileManipulation = new FileManipulation();
+
         ElmData elmData = new ElmData(elmName, numberofInputNeurons, numberofHiddenNeurons, numberofOutputNeurons,
-                InputWeight, BiasofHiddenNeurons, OutputWeight, func, elm_Type, classesNames, attributeNames, attributeNames.length);
+                InputWeight, BiasofHiddenNeurons, OutputWeight, func, elm_Type, attributesNames, classesNames, attributesNames.length);
+
+
         fileManipulation.export(elmName, elmData, filesDir);
     }
 
@@ -177,8 +178,7 @@ public class ElmTrain
                     H.set(j, i, temp);
                 }
             }
-        }
-        else if (func.startsWith("sin"))
+        } else if (func.startsWith("sin"))
         {
             for (int j = 0; j < numberofHiddenNeurons; j++)
             {
@@ -189,16 +189,13 @@ public class ElmTrain
                     H.set(j, i, temp);
                 }
             }
-        }
-        else if (func.startsWith("hardlim"))
+        } else if (func.startsWith("hardlim"))
         {
             //If you need it ,you can absolutely complete it yourself
-        }
-        else if (func.startsWith("tribas"))
+        } else if (func.startsWith("tribas"))
         {
             //If you need it ,you can absolutely complete it yourself
-        }
-        else if (func.startsWith("radbas"))
+        } else if (func.startsWith("radbas"))
         {
             //If you need it ,you can absolutely complete it yourself
         }

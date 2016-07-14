@@ -87,13 +87,4 @@
         android:layout_alignStart="@+id/textView_Results_AccuracyFloat"
         android:layout_alignEnd="@+id/textView_Results_ElmNameString"/>
 
-    <ImageButton
-        android:id="@+id/imageButton_Results_Back"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/ic_replay_black_24dp"
-        android:onClick="imageButtonReturnClick"/>
-
 </RelativeLayout>
