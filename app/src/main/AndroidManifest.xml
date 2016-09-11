@@ -7,7 +7,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_brain_tree"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -19,13 +19,21 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".TrainActivity" android:label="Train">
+        <activity
+            android:name=".TrainActivity"
+            android:label="Train">
         </activity>
-        <activity android:name=".ResultsActivity" android:label="Results">
+        <activity
+            android:name=".ResultsActivity"
+            android:label="Results">
         </activity>
-        <activity android:name=".TestFileActivity" android:label="Test File">
+        <activity
+            android:name=".TestFileActivity"
+            android:label="Test File">
         </activity>
-        <activity android:name=".TestUniqueActivity" android:label="Test Input">
+        <activity
+            android:name=".TestUniqueActivity"
+            android:label="Test Input">
         </activity>
         <activity android:name=".FileDialogActivity">
         </activity>

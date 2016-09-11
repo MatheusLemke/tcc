@@ -34,7 +34,7 @@ public class FileManipulation
 
     public DenseMatrix importMatrixFromFile(Context context, int elm_Type) throws IOException
     {
-        InputStream inputStream = context.getResources().openRawResource(R.raw.space_ga_train);
+        InputStream inputStream = context.getResources().openRawResource(R.raw.diabetes_train);
         reader = new BufferedReader(new InputStreamReader(inputStream));
         return readMatrix(elm_Type);
     }
@@ -42,8 +42,8 @@ public class FileManipulation
     public DenseMatrix importMatrixToTest(Context context, int elm_Type) throws IOException
     {
         // TODO: arquivo de teste por padrão
-        //InputStream inputStream = context.getResources().openRawResource(R.raw.space_ga_test);
-        InputStream inputStream = context.getResources().openRawResource(R.raw.space_ga_test);
+        //InputStream inputStream = context.getResources().openRawResource(R.raw.diabetes_test);
+        InputStream inputStream = context.getResources().openRawResource(R.raw.diabetes_test);
         reader = new BufferedReader(new InputStreamReader(inputStream));
         return readMatrix(elm_Type);
     }
@@ -381,7 +381,7 @@ public class FileManipulation
 
     public String[][] importAttributesClassesNamesToTrain(Context context, int n_Attributes, int elm_Type, int n_Classes) throws IOException
     {
-        InputStream inputStream = context.getResources().openRawResource(R.raw.space_ga_attributes_classes_names);
+        InputStream inputStream = context.getResources().openRawResource(R.raw.diabetes_attributes_classes_names);
         reader = new BufferedReader(new InputStreamReader(inputStream));
 
         return importAttributesClassesNamesToTrain(n_Attributes, elm_Type, n_Classes);

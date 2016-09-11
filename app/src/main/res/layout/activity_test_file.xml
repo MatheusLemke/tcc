@@ -38,7 +38,8 @@
         android:cursorVisible="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:singleLine="true"/>
 
     <Button
         android:id="@+id/button_TestFile_ChooseELM"
@@ -70,7 +71,8 @@
         android:cursorVisible="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:singleLine="true"/>
 
     <Button
         android:id="@+id/button_TestFile_ChooseTestFile"

@@ -36,7 +36,8 @@
         android:layout_below="@+id/textView_Train_ELMName"
         android:layout_toStartOf="@+id/textView_Train_NumberOfHiddenNeurons"
         android:inputType="text"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        android:singleLine="true"/>
 
     <TextView
         android:id="@+id/textView_Train_NumberOfHiddenNeurons"
@@ -58,7 +59,8 @@
         android:ems="10"
         android:inputType="number"
         android:maxLines="1"
-        android:text="20"/>
+        android:text="20"
+        android:singleLine="true"/>
 
     <TextView
         android:id="@+id/textView_Train_Type"
@@ -190,7 +192,8 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:maxLines="1"
-        android:onClick="buttonChooseAttributeNamesFileClick"/>
+        android:onClick="buttonChooseAttributeNamesFileClick"
+        android:singleLine="true"/>
 
     <Button
         android:id="@+id/button_Train_ChooseAttributeNamesFile"

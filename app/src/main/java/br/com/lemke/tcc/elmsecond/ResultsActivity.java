@@ -25,29 +25,41 @@ public class ResultsActivity extends AppCompatActivity
             if (intent.getIntExtra("ElmType", -1) == 1)
                 updateLayout(intent.getStringExtra("Class"));
             else
-                updateLayout(intent.getDoubleExtra("Result", -1), false);
+                updateLayout(String.valueOf(intent.getDoubleExtra("Result", -1)), false, false);
+        else if (type.equals("Train"))
+            updateLayout("", true, true);
         else
-            updateLayout(intent.getDoubleExtra("Accuracy", 0), true);
+            updateLayout(String.valueOf(intent.getDoubleExtra("Accuracy", 0)), true, false);
 
         updateLayout(type, elmName, time);
     }
 
-    private void updateLayout(double value, boolean isAccuracy)
+    private void updateLayout(String value, boolean isAccuracy, boolean isTraining)
     {
         if (!isAccuracy)
         {
             TextView textView = (TextView) findViewById(R.id.textView_Results_Accuracy);
+            assert textView != null;
             textView.setText("Result");
         }
+        if (isTraining)
+        {
+            TextView textView = (TextView) findViewById(R.id.textView_Results_Accuracy);
+            assert textView != null;
+            textView.setText("");
+        }
         TextView textView2 = (TextView) findViewById(R.id.textView_Results_AccuracyFloat);
-        textView2.setText(String.valueOf(value));
+        assert textView2 != null;
+        textView2.setText(value);
     }
 
     private void updateLayout(String classs)
     {
         TextView textView = (TextView) findViewById(R.id.textView_Results_Accuracy);
+        assert textView != null;
         textView.setText("Class");
         TextView textView2 = (TextView) findViewById(R.id.textView_Results_AccuracyFloat);
+        assert textView2 != null;
         textView2.setText(classs);
     }
 
